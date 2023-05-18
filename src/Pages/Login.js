@@ -1,30 +1,34 @@
 import React, { useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import { auth, db } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const Login = () => {
   // sign in with google
   const navigate = useNavigate();
-  const [user, loading] = useAuthState(auth);
   const googleProvider = new GoogleAuthProvider();
   const googleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
+      const docRef = doc(db, "users", result.user.uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        await setDoc(doc(db, "users", result.user.uid), {
+          uid: result.user.uid,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
+          email: result.user.email,
+        });
+        await setDoc(doc(db, "userChats", result.user.uid))
+      }
       navigate("/")
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }else{
-      navigate("/login");
-    }
-  }, [user]);
+
 
   return (
     <div>
