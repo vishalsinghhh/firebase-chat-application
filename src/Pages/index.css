@@ -20,3 +20,20 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
+
+
+.sidebarNull{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 200px;
+}
+.joinLetter{
+    margin-top: 10px;
+}
+.sidebarNull img{
+    cursor: pointer;
+    width: 100px;
+}

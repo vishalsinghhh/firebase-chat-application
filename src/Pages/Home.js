@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
 import {
@@ -18,6 +18,7 @@ import "./index.css";
 const Home = () => {
   const [user, loading] = useAuthState(auth);
   const [roomName, setRoomName] = useState("");
+  const [room, getRooms] = useState()
   const handleSubmit = async () => {
     if (roomName === "") {
       return;
@@ -34,13 +35,17 @@ const Home = () => {
       where("users", "array-contains", { id: "vI0vpqYVulVXHWgqFKm6k5X2uWF2" })
     );
     const docSnap = await getDocs(q);
-    console.log(docSnap);
+    getRooms(docSnap._snapshot.docChanges)
   };
+
+  useEffect(()=>{
+    getData()
+  }, [])
 
   return (
     <div className="HomeMain">
       <div className="sidebar">
-        <Sidebar />
+        <Sidebar room={room}/>
       </div>
       <div className="Chatting">
         <Chatting />
