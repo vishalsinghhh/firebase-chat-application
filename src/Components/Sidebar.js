@@ -14,6 +14,8 @@ import {
   where,
   getDocs,
   onSnapshot,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { useGlobalContext } from "../appContext";
@@ -25,6 +27,7 @@ const Sidebar = () => {
   const [user, loading] = useAuthState(auth);
   const [modal, setModal] = useState(false);
   const [roomName, setRoomName] = useState("");
+  const [link, setLink] = useState("");
   const handleSubmit = async () => {
     if (roomName === "") {
       return;
@@ -40,6 +43,17 @@ const Sidebar = () => {
       ],
       messages: [],
       lastMessage: "",
+    });
+    await getData();
+    setModal(false);
+  };
+  const handleJoin = async () => {
+    await updateDoc(doc(db, "userRooms", link), {
+      users: arrayUnion({
+        id: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      }),
     });
     await getData();
     setModal(false);
@@ -120,9 +134,15 @@ const Sidebar = () => {
             <div className="or">OR</div>
             <div className="inputField">
               <div>
-                <input type="text" placeholder="Enter Room Link..." />
+                <input type="text" placeholder="Enter Room Link..." onChange={(e) => {
+                    setLink(e.target.value);
+                  }}/>
               </div>
-              <div>
+              <div
+                onClick={() => {
+                  handleJoin();
+                }}
+              >
                 <img src={join} alt="" />
               </div>
             </div>
