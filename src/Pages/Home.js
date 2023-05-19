@@ -16,36 +16,11 @@ import Chatting from "../Components/Chatting";
 import "./index.css";
 
 const Home = () => {
-  const [user, loading] = useAuthState(auth);
-  const [roomName, setRoomName] = useState("");
-  const [room, getRooms] = useState()
-  const handleSubmit = async () => {
-    if (roomName === "") {
-      return;
-    }
-    const docRef = await addDoc(collection(db, "userRooms"), {
-      roomName: roomName,
-      users: [{ id: user.uid }],
-    });
-  };
-
-  const getData = async () => {
-    const q = query(
-      collection(db, "userRooms"),
-      where("users", "array-contains", { id: "vI0vpqYVulVXHWgqFKm6k5X2uWF2" })
-    );
-    const docSnap = await getDocs(q);
-    getRooms(docSnap._snapshot.docChanges)
-  };
-
-  useEffect(()=>{
-    getData()
-  }, [])
 
   return (
     <div className="HomeMain">
       <div className="sidebar">
-        <Sidebar room={room}/>
+        <Sidebar/>
       </div>
       <div className="Chatting">
         <Chatting />
