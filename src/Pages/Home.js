@@ -16,7 +16,6 @@ import Chatting from "../Components/Chatting";
 import "./index.css";
 
 const Home = () => {
-
   return (
     <div className="HomeMain">
       <div className="sidebar">
