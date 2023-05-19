@@ -15,6 +15,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
+import RoomChat from "./RoomChat";
 
 const Chatting = () => {
   const [user, loading] = useAuthState(auth);
@@ -79,7 +80,7 @@ const Chatting = () => {
 
   return (
     <div>
-      <div className="ChattingMain">
+      {/* <div className="ChattingMain">
         <div>
           <img src={logo} alt="" />
         </div>
@@ -91,7 +92,8 @@ const Chatting = () => {
           click
         </button>
         <div className="joinLetter">Connect. Chat. Collaborate.</div>
-      </div>
+      </div> */}
+      <RoomChat/>
     </div>
   );
 };

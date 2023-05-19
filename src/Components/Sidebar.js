@@ -16,8 +16,10 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
+import { useGlobalContext } from "../appContext";
 
 const Sidebar = () => {
+  const {getRoomID} = useGlobalContext()
   const [room, getRooms] = useState();
   const [chats, setChats] = useState([]);
   const [user, loading] = useAuthState(auth);
@@ -30,6 +32,8 @@ const Sidebar = () => {
     const docRef = await addDoc(collection(db, "userRooms"), {
       roomName: roomName,
       users: [{ id: user.uid }],
+      messages: [],
+      lastMessage: "",
     });
     await getData();
     setModal(false);
@@ -41,7 +45,7 @@ const Sidebar = () => {
         where("users", "array-contains", { id: user.uid })
       );
       const docSnap = await getDocs(q);
-      console.log(docSnap._snapshot.docChanges);
+      console.log(docSnap);
       getRooms(docSnap._snapshot.docChanges);
     }
   };
@@ -64,6 +68,12 @@ const Sidebar = () => {
   useEffect(() => {
     getData();
   }, [user]);
+
+  // ROOM
+  const handleRoom = (data) => {
+    getRoomID(data)
+  };
+
   return (
     <div>
       {modal && (
@@ -139,7 +149,11 @@ const Sidebar = () => {
             <div>
               {room?.map((_, index) => {
                 return (
-                  <div>
+                  <div
+                    onClick={() => {
+                      handleRoom(room[index].doc.key.path.segments[6]);
+                    }}
+                  >
                     {
                       room[index].doc.data.value.mapValue.fields.roomName
                         .stringValue
