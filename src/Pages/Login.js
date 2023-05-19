@@ -21,7 +21,7 @@ const Login = () => {
           photoURL: result.user.photoURL,
           email: result.user.email,
         });
-        await setDoc(doc(db, "userChats", result.user.uid))
+        await setDoc(doc(db, "userChats", result.user.uid),{})
       }
       navigate("/")
     } catch (error) {
