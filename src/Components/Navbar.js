@@ -3,6 +3,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import logout1 from "../Images/logout.svg";
+import "./index.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -14,15 +16,29 @@ const Navbar = () => {
   useEffect(() => {
     if (user) {
       navigate("/");
-    }else{
+    } else {
       navigate("/login");
     }
   }, [user]);
 
   return (
-    <div>
-      Navbar
-      <button onClick={()=>{logout()}}>Logout</button>
+    <div className="NavbarMain1">
+      <div className="navbarMain">
+        <div className="navbarTitle">
+          CI<span className="green">AO</span>
+        </div>
+        <div className="Navbar1">
+          <div className="NavbarName">{user?.displayName}</div>
+          <div className="NavbarLogo">
+            <img src={user?.photoURL} alt="" />
+          </div>
+          <div className="logoutBTN" onClick={()=>{logout()}}>
+            <img src={logout1} alt="" />
+          </div>
+        </div>
+        
+      </div>
+      <div className="underline"></div>
     </div>
   );
 };
