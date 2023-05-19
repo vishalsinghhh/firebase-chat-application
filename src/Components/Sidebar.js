@@ -134,9 +134,13 @@ const Sidebar = () => {
             <div className="or">OR</div>
             <div className="inputField">
               <div>
-                <input type="text" placeholder="Enter Room Link..." onChange={(e) => {
+                <input
+                  type="text"
+                  placeholder="Enter Room Link..."
+                  onChange={(e) => {
                     setLink(e.target.value);
-                  }}/>
+                  }}
+                />
               </div>
               <div
                 onClick={() => {
@@ -166,28 +170,33 @@ const Sidebar = () => {
           </div>
         ) : (
           <div>
-            <div>Chat Rooms</div>
-            {/* <div>
-              <img
-                src={plus}
-                alt=""
-                onClick={() => {
-                  setModal(true);
-                }}
-              />
-            </div> */}
-            <div>
+            <div className="chatRoomMain">
+              <div className="chatRoom">Chat Rooms</div>
+              <div>
+                <img
+                  src={plus}
+                  alt=""
+                  onClick={() => {
+                    setModal(true);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="RoomsMain">
               {room?.map((_, index) => {
                 return (
                   <div
                     onClick={() => {
                       handleRoom(room[index].doc.key.path.segments[6]);
                     }}
+                    className="Rooms"
                   >
-                    {
+                  <div className="roomIndex">{index+1}</div>
+                  <div className="MainName">{
                       room[index].doc.data.value.mapValue.fields.roomName
                         .stringValue
-                    }
+                    }</div>
                   </div>
                 );
               })}

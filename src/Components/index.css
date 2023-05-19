@@ -48,3 +48,55 @@
     justify-content: center;
     align-items: center;
 }
+
+.chatRoom{
+    font-family: 'light';
+    font-size: 20px;
+}
+.chatRoomMain{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.chatRoomMain img{
+    width: 30px;
+    cursor: pointer;
+    margin-left: 120px;
+    
+}
+
+.Rooms{
+    background: #363D4F;
+    width: 80%;
+    margin: 10px;
+    height: 70px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.Rooms:hover{
+    background: #545967;
+}
+.RoomsMain{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.roomIndex{
+    background: #000;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    font-family: 'light';
+    font-size: 22px;
+    margin: 20px;
+}
+.MainName{
+    font-weight: 700;
+}
