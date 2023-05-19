@@ -19,7 +19,7 @@ import { db } from "../utils/firebase";
 import { useGlobalContext } from "../appContext";
 
 const Sidebar = () => {
-  const {getRoomID} = useGlobalContext()
+  const { getRoomID } = useGlobalContext();
   const [room, getRooms] = useState();
   const [chats, setChats] = useState([]);
   const [user, loading] = useAuthState(auth);
@@ -31,7 +31,13 @@ const Sidebar = () => {
     }
     const docRef = await addDoc(collection(db, "userRooms"), {
       roomName: roomName,
-      users: [{ id: user.uid }],
+      users: [
+        {
+          id: user.uid,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        },
+      ],
       messages: [],
       lastMessage: "",
     });
@@ -42,7 +48,11 @@ const Sidebar = () => {
     if (user) {
       const q = query(
         collection(db, "userRooms"),
-        where("users", "array-contains", { id: user.uid })
+        where("users", "array-contains", {
+          id: user.uid,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        })
       );
       const docSnap = await getDocs(q);
       console.log(docSnap);
@@ -71,7 +81,7 @@ const Sidebar = () => {
 
   // ROOM
   const handleRoom = (data) => {
-    getRoomID(data)
+    getRoomID(data);
   };
 
   return (
