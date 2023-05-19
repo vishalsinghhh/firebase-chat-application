@@ -13,12 +13,13 @@ import {
   getDoc,
   where,
   getDocs,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 
 const Sidebar = () => {
   const [room, getRooms] = useState();
-
+  const [chats, setChats] = useState([]);
   const [user, loading] = useAuthState(auth);
   const [modal, setModal] = useState(false);
   const [roomName, setRoomName] = useState("");
@@ -47,6 +48,18 @@ const Sidebar = () => {
   if (room) {
     console.log(room[0]?.doc.data.value.mapValue.fields.roomName.stringValue);
   }
+
+  useEffect(() => {
+    if (user) {
+      const unsub = onSnapshot(doc(db, "userChats", user.uid), (doc) => {
+        setChats(doc.data());
+      });
+      return () => {
+        unsub();
+      };
+    }
+  }, [user]);
+  console.log(chats);
 
   useEffect(() => {
     getData();
