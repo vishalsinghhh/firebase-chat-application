@@ -7,6 +7,12 @@ import {
   onSnapshot,
   serverTimestamp,
   updateDoc,
+  getDoc,
+  setDoc,
+  query,
+  collection,
+  where,
+  getDocs,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import send from "../Images/send.svg";
@@ -18,6 +24,7 @@ import cross from "../Images/cross.svg";
 import direct from "../Images/direct.svg";
 
 const RoomChat = () => {
+  const [otherUser, setOtherUser] = useState(null);
   const [modal, setModal] = useState(false);
   const [user, loading] = useAuthState(auth);
   const [text, setText] = useState("");
@@ -50,6 +57,54 @@ const RoomChat = () => {
     });
   };
 
+  const handleSelect = async (userID) => {
+    // Check whether the chat exists or not
+
+    const q = query(collection(db, "users"), where("uid", "==", userID));
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setOtherUser(doc.data());
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    const combinedId =
+      user.uid > otherUser.uid
+        ? user.uid + otherUser.uid
+        : otherUser.uid + user.uid;
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+      if (!res.exists()) {
+        //create a chat in chats collection
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+        //create user chats
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: otherUser.uid,
+            displayName: otherUser.displayName,
+            photoURL: otherUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", otherUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    // create user chats
+  };
+
   return (
     <div>
       {modal && (
@@ -70,11 +125,23 @@ const RoomChat = () => {
                   <div>
                     <img src={item.photoURL} alt="" />
                   </div>
-                  <div className="memDisplay">{item.id === user.uid ? '(Myself)' : <p>{item.displayName}</p>}</div>
-                  {item.id !== user.uid && <div className="memPhoto">
-                    <img src={direct} alt="" />
-                  </div>}
-                  
+                  <div className="memDisplay">
+                    {item.id === user.uid ? (
+                      "(Myself)"
+                    ) : (
+                      <p>{item.displayName}</p>
+                    )}
+                  </div>
+                  {item.id !== user.uid && (
+                    <div
+                      className="memPhoto"
+                      onClick={() => {
+                        handleSelect(item.id);
+                      }}
+                    >
+                      <img src={direct} alt="" />
+                    </div>
+                  )}
                 </div>
               );
             })}

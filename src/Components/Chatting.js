@@ -36,43 +36,7 @@ const Chatting = () => {
     } catch (error) {}
   };
 
-  const handleSelect = async () => {
-    // Check whether the chat exists or not
-    const combinedId =
-      user.uid > otherUser.uid
-        ? user.uid + otherUser.uid
-        : otherUser.uid + user.uid;
-    try {
-      const res = await getDoc(doc(db, "chats", combinedId));
-      if (!res.exists()) {
-        //create a chat in chats collection
-        await setDoc(doc(db, "chats", combinedId), { messages: [] });
-
-        //create user chats
-        await updateDoc(doc(db, "userChats", user.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: otherUser.uid,
-            displayName: otherUser.displayName,
-            photoURL: otherUser.photoURL,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
-
-        await updateDoc(doc(db, "userChats", otherUser.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: user.uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-
-    // create user chats
-  };
+  
 
   useEffect(() => {
     getOtherUser();
