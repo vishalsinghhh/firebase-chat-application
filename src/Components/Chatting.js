@@ -80,6 +80,7 @@ const Chatting = () => {
 
   return (
     <div>
+    
       {screenType === "empty" && (
         <div className="ChattingMain">
           <div>

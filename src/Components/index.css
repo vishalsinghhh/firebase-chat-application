@@ -188,3 +188,9 @@
     display: flex;
     
 }
+
+.modalCross img{
+    cursor: pointer;
+    margin-left: 290px;
+    margin-top: 20px;
+}
