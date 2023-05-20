@@ -21,7 +21,7 @@ import { db } from "../utils/firebase";
 import { useGlobalContext } from "../appContext";
 
 const Sidebar = () => {
-  const { getRoomID } = useGlobalContext();
+  const { getRoomID, changeScreenType } = useGlobalContext();
   const [room, getRooms] = useState();
   const [chats, setChats] = useState([]);
   const [user, loading] = useAuthState(auth);
@@ -95,7 +95,7 @@ const Sidebar = () => {
 
   // ROOM
   const handleRoom = (data) => {
-    getRoomID(data);
+    getRoomID(data)
   };
 
   return (
@@ -188,6 +188,7 @@ const Sidebar = () => {
                 return (
                   <div
                     onClick={() => {
+                      changeScreenType('room')
                       handleRoom(room[index].doc.key.path.segments[6]);
                     }}
                     className="Rooms"

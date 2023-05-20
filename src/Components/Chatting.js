@@ -16,8 +16,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import RoomChat from "./RoomChat";
+import { useGlobalContext } from "../appContext";
 
 const Chatting = () => {
+  const { screenType } = useGlobalContext();
   const [user, loading] = useAuthState(auth);
   const [otherUser, setOtherUser] = useState(null);
 
@@ -41,7 +43,7 @@ const Chatting = () => {
       user.uid > otherUser.uid
         ? user.uid + otherUser.uid
         : otherUser.uid + user.uid;
-        console.log(combinedId);
+    console.log(combinedId);
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
       if (!res.exists()) {
@@ -77,23 +79,30 @@ const Chatting = () => {
   useEffect(() => {
     getOtherUser();
   }, []);
+  console.log(screenType);
 
   return (
     <div>
-      {/* <div className="ChattingMain">
-        <div>
-          <img src={logo} alt="" />
+      {screenType === "empty" && (
+        <div className="ChattingMain">
+          <div>
+            <img src={logo} alt="" />
+          </div>
+          {/* <button
+            onClick={() => {
+              handleSelect();
+            }}
+          >
+            click
+          </button> */}
+          <div className="joinLetter">Connect. Chat. Collaborate.</div>
         </div>
-        <button
-          onClick={() => {
-            handleSelect();
-          }}
-        >
-          click
-        </button>
-        <div className="joinLetter">Connect. Chat. Collaborate.</div>
-      </div> */}
-      <RoomChat/>
+      )}
+      {screenType === "room" && (
+        <div>
+          <RoomChat />
+        </div>
+      )}
     </div>
   );
 };

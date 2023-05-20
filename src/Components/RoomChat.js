@@ -7,16 +7,26 @@ const RoomChat = () => {
   const [messages, setMessages] = useState([]);
   const { roomID } = useGlobalContext();
   useEffect(() => {
-    if(roomID){
-        const unsub = onSnapshot(doc(db, "userRooms", roomID), (doc) => {
-            console.log(doc.data());
-        });
+    if (roomID) {
+      const unsub = onSnapshot(doc(db, "userRooms", roomID), (doc) => {
+        doc.exists() && setMessages(doc.data());
+      });
+      
     }
-    
-    // console.log(unSub);
-  }, [roomID]);
 
-  return <div>RoomChat</div>;
+    //
+  }, [roomID]);
+  console.log(messages);
+
+  return (
+    <div>
+      <div className="messagesMain">
+        <div className="messageName">{messages?.roomName}</div>
+        <div className="messageBTN">Copy Link</div>
+        <div className="messageBTN">All Members</div>
+      </div>
+    </div>
+  );
 };
 
 export default RoomChat;
