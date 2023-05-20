@@ -47,7 +47,7 @@ const RoomChat = () => {
         <div className="messageBTN">Copy Link</div>
         <div className="messageBTN">All Members</div>
       </div>
-      <div>
+      <div className="messageMap">
         {messages?.messages?.map((m) => (
           <Messages messages={m} />
         ))}

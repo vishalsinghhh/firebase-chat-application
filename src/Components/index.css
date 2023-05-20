@@ -165,5 +165,26 @@
     margin: 25px;
 }
 .myMessage2 p{
-    margin: 25px;
+    margin: 15px;
+}
+.messageMap{
+    overflow-y: auto;
+    height: 450px;
+}
+
+.DisplayName img{
+    width: 40px;
+    border-radius: 100%;
+}
+.DisplayName{
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+.myMessage2{
+    display: flex;
+    
 }

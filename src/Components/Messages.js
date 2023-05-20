@@ -9,9 +9,21 @@ const Messages = ({ messages }) => {
     <div>
       <div>
         {messages.senderId === user.uid ? (
-          <div className="myMessage1"><p><span className="myMessageNew">{messages.text}</span></p></div>
+          <div className="myMessage1">
+            <p>
+              <span className="myMessageNew">{messages.text}</span>
+            </p>
+          </div>
         ) : (
-          <div className="myMessage2"><p><span className="myMessageNew">{messages.text}</span></p></div>
+          <div className="myMessage2">
+            <div className="DisplayName">
+              <img src={messages.senderPhotoURL} alt="" />
+              <div className="DisplayNameMain">{messages.senderDisplayName}</div>
+            </div>
+            <p>
+              <span className="myMessageNew">{messages.text}</span>
+            </p>
+          </div>
         )}
       </div>
     </div>
