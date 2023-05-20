@@ -30,7 +30,9 @@ const RoomChat = () => {
         id:uuid(),
         text,
         senderId:user.uid,
-        date:Timestamp.now()
+        senderDisplayName:user.displayName,
+        senderPhotoURL:user.photoURL,
+        date:Timestamp.now(),
       })
     })
     await updateDoc(doc(db, "userRooms", roomID),{
