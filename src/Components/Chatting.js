@@ -17,30 +17,12 @@ import {
 import { db } from "../utils/firebase";
 import RoomChat from "./RoomChat";
 import { useGlobalContext } from "../appContext";
+import DirectChat from "./DirectChat";
 
 const Chatting = () => {
   const { screenType } = useGlobalContext();
   const [user, loading] = useAuthState(auth);
   const [otherUser, setOtherUser] = useState(null);
-
-  const getOtherUser = async () => {
-    const q = query(
-      collection(db, "users"),
-      where("uid", "==", "gg5CJzyTiMc5aRZUxREvoFsU0Kh2")
-    );
-    try {
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setOtherUser(doc.data());
-      });
-    } catch (error) {}
-  };
-
-  
-
-  useEffect(() => {
-    getOtherUser();
-  }, []);
 
   return (
     <div>
@@ -63,6 +45,11 @@ const Chatting = () => {
       {screenType === "room" && (
         <div>
           <RoomChat />
+        </div>
+      )}
+      {screenType === "direct" && (
+        <div>
+          <DirectChat />
         </div>
       )}
     </div>

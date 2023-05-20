@@ -4,7 +4,6 @@ import { auth } from "../utils/firebase";
 
 const Messages = ({ messages }) => {
   const [user, loading] = useAuthState(auth);
-  console.log(messages);
   return (
     <div>
       <div>

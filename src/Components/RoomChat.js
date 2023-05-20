@@ -24,12 +24,12 @@ import cross from "../Images/cross.svg";
 import direct from "../Images/direct.svg";
 
 const RoomChat = () => {
-  const [otherUser, setOtherUser] = useState(null);
+  // const [otherUser, setOtherUser] = useState(null);
   const [modal, setModal] = useState(false);
   const [user, loading] = useAuthState(auth);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
-  const { roomID } = useGlobalContext();
+  const { roomID, changeScreenType } = useGlobalContext();
   useEffect(() => {
     if (roomID) {
       const unsub = onSnapshot(doc(db, "userRooms", roomID), (doc) => {
@@ -61,14 +61,18 @@ const RoomChat = () => {
     // Check whether the chat exists or not
 
     const q = query(collection(db, "users"), where("uid", "==", userID));
+    let otherUser = null
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        setOtherUser(doc.data());
+        otherUser = doc.data()
+        console.log(doc.data());
       });
     } catch (error) {
       console.log(error);
     }
+    
+    
     const combinedId =
       user.uid > otherUser.uid
         ? user.uid + otherUser.uid
@@ -136,6 +140,7 @@ const RoomChat = () => {
                     <div
                       className="memPhoto"
                       onClick={() => {
+                        changeScreenType("direct");
                         handleSelect(item.id);
                       }}
                     >
