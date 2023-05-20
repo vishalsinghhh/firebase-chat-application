@@ -153,12 +153,15 @@
     text-align: right;
 }
 .myMessageNew{
-    background: #000;
+    background: #616161;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 10px;
+}
+.myMessageNew1{
+    background: #000;
 }
 
 .myMessage1 p{
@@ -188,9 +191,42 @@
     display: flex;
     
 }
+.modalCross{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'light';
+    font-size: 20px;
+    margin: 20px;
+}
 
 .modalCross img{
     cursor: pointer;
-    margin-left: 290px;
+    position: relative;
+    left: 40px;
+    /* margin-left: 290px;
     margin-top: 20px;
+    margin-bottom: 20px; */
+}
+.memberMain{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #363D4F;
+    width: 85%;
+    margin-left: 25px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+.memberMain img{
+    width: 40px;
+    cursor: pointer;
+    border-radius: 100%;
+
+}
+.memDisplay{
+    margin: 20px;
+}
+.memPhoto{
+    margin-left: 20px;
 }

@@ -11,7 +11,7 @@ const Messages = ({ messages }) => {
         {messages.senderId === user.uid ? (
           <div className="myMessage1">
             <p>
-              <span className="myMessageNew">{messages.text}</span>
+              <span className="myMessageNew myMessageNew1">{messages.text}</span>
             </p>
           </div>
         ) : (
