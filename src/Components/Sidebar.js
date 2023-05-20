@@ -90,7 +90,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getData();
-  }, [user, room]);
+  }, [user]);
 
   // ROOM
   const handleRoom = (data) => {
@@ -188,7 +188,8 @@ const Sidebar = () => {
                   <div
                     onClick={() => {
                       changeScreenType('room')
-                      handleRoom(room[index].doc.key.path.segments[6]);
+                      {room[index].doc.key.path.segments[6] ? handleRoom(room[index].doc.key.path.segments[6]): handleRoom(room[index].doc.key.path.segments[1]);}
+                      
                     }}
                     className="Rooms"
                   >
