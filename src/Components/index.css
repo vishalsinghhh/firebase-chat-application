@@ -149,3 +149,21 @@
 .RoomsMain{
     overflow-y: auto;
 }
+.myMessage1{
+    text-align: right;
+}
+.myMessageNew{
+    background: #000;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+.myMessage1 p{
+    margin: 25px;
+}
+.myMessage2 p{
+    margin: 25px;
+}
