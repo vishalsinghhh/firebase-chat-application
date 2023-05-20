@@ -10,9 +10,7 @@ import {
   addDoc,
   doc,
   query,
-  getDoc,
   where,
-  getDocs,
   onSnapshot,
   updateDoc,
   arrayUnion,
@@ -92,7 +90,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     getData();
-  }, [user]);
+  }, [user, room]);
 
   // ROOM
   const handleRoom = (data) => {

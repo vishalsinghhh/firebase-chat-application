@@ -82,8 +82,8 @@
 .RoomsMain{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    max-height: 520px;
 }
 .roomIndex{
     background: #000;
@@ -130,8 +130,8 @@
     cursor: pointer;
 }
 .messageInputs{
-    position: relative;
-    bottom: -445px;
+    position: absolute;
+    bottom: 60px;
     display: flex;
 }
 .messageInputs input{
@@ -144,4 +144,8 @@
     margin-top: 20px;
     margin-left: 20px;
     cursor: pointer;
+}
+
+.RoomsMain{
+    overflow-y: scroll;
 }
