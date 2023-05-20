@@ -129,3 +129,19 @@
     background: #545967;
     cursor: pointer;
 }
+.messageInputs{
+    position: relative;
+    bottom: -445px;
+    display: flex;
+}
+.messageInputs input{
+    background-color: #000;
+    margin: 20px;
+    width: 600px;
+}
+.messageInputs img{
+    width: 50px;
+    margin-top: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+}
