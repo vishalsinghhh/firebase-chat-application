@@ -68,9 +68,10 @@ const Sidebar = () => {
           photoURL: user.photoURL,
         })
       );
-      const docSnap = await getDocs(q);
-      console.log(docSnap);
-      getRooms(docSnap._snapshot.docChanges);
+      
+      onSnapshot(q, (querySnapshot) => {
+        getRooms(querySnapshot._snapshot.docChanges);
+      });
     }
   };
   if (room) {
