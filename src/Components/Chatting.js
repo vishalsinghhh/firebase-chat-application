@@ -35,7 +35,6 @@ const Chatting = () => {
       });
     } catch (error) {}
   };
-  console.log(otherUser);
 
   const handleSelect = async () => {
     // Check whether the chat exists or not
@@ -43,7 +42,6 @@ const Chatting = () => {
       user.uid > otherUser.uid
         ? user.uid + otherUser.uid
         : otherUser.uid + user.uid;
-    console.log(combinedId);
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
       if (!res.exists()) {
@@ -79,7 +77,6 @@ const Chatting = () => {
   useEffect(() => {
     getOtherUser();
   }, []);
-  console.log(screenType);
 
   return (
     <div>

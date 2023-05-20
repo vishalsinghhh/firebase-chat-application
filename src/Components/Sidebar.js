@@ -14,6 +14,7 @@ import {
   onSnapshot,
   updateDoc,
   arrayUnion,
+  getDocs,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { useGlobalContext } from "../appContext";
@@ -67,14 +68,15 @@ const Sidebar = () => {
         })
       );
       
-      onSnapshot(q, (querySnapshot) => {
-        getRooms(querySnapshot._snapshot.docChanges);
+      onSnapshot(q, async(querySnapshot) => {
+        // getRooms(querySnapshot._snapshot.docChanges);
+        const employees = await getDocs(q);
+        getRooms(employees._snapshot.docChanges)
       });
+      const employees = await getDocs(q);
+      
     }
   };
-  if (room) {
-    console.log(room[0]?.doc.data.value.mapValue.fields.roomName.stringValue);
-  }
 
   useEffect(() => {
     if (user) {
@@ -86,7 +88,6 @@ const Sidebar = () => {
       };
     }
   }, [user]);
-  console.log(chats);
 
   useEffect(() => {
     getData();

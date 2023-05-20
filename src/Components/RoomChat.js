@@ -22,7 +22,6 @@ const RoomChat = () => {
 
     //
   }, [roomID]);
-  console.log(roomID);
 
   const handleSubmit=async()=>{
     await updateDoc(doc(db, "userRooms", roomID), {
