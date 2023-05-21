@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# Real-Time Chat Application : CIAO
+#### The Real-Time Chat Application is a feature-rich messaging platform that enables seamless communication among users. It provides real-time messaging, chat room functionality, message history, and private messaging, all backed by Google User Authentication through Firebase Authentication.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Key Features
+1. **Google User Authentication:** Users can log in and log out using their Google accounts via Firebase Authentication, ensuring a secure and streamlined authentication process.
 
-## Available Scripts
+2. **Chat Rooms:** Users have the ability to create, join, and leave chat rooms, facilitating communication among multiple users in various contexts.
 
-In the project directory, you can run:
+3. **Real-Time Messaging:** Messages sent by users appear instantly in the chat room in real time, creating an interactive and engaging communication experience.
 
-### `npm start`
+4. **Message History:** The chat application stores the history of messages for each chat room, allowing users to catch up on previous conversations when they join a room.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+5. **Private Messaging:** Users can send private messages to other users, enabling one-on-one conversations within the application.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
+- Firebase Authentication: Handles user authentication and manages user sessions using Google User Authentication.
+- Firebase Realtime Database or Firestore: Stores and retrieves messages in real time and preserves the message history for each chat room.
+- ReactJS for frontend
+- Figma for UI/UX
 
-### `npm test`
+## Installation and Setup Instructions
+Clone down this repository. You will need `node` and `npm` installed globally on your machine.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Installation:
 
-### `npm run build`
+`npm install`  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To Run Test Suite:  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`npm test`  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To Start Server:
 
-### `npm run eject`
+`npm start`  
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+To Visit App:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`localhost:3000` 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Demo link - 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<a href="https://fir-chat-application-9b9d5.web.app" target="_blank">Link</a>
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Project Screen Shot(s)
+<img src="https://github.com/vishalsinghhh/firebase-chat-application/assets/71393033/e02133af-f859-453a-83d1-0e1651762af9" alt="" width="500"/> <img src="https://github.com/vishalsinghhh/firebase-chat-application/assets/71393033/17e1bfd5-e564-44f8-91de-29dc74125c3c" width="500"/> <img src="https://github.com/vishalsinghhh/firebase-chat-application/assets/71393033/7179254f-6536-4e3f-8e11-e5d831c5f587" width="500"/>
