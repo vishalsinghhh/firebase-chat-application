@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
 
 const Messages = ({ messages }) => {
+  const ref = useRef()
   const [user, loading] = useAuthState(auth);
+  useEffect(()=>{
+    ref.current?.scrollIntoView({behavior:"smooth"})
+  },[messages])
   return (
     <div>
-      <div>
+      <div ref={ref}>
         {messages.senderId === user?.uid ? (
           <div className="myMessage1">
             <p>

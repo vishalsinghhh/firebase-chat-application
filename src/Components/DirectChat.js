@@ -24,7 +24,6 @@ const DirectChat = () => {
   const [chats, setChats] = useState([]);
   const [user, loading] = useAuthState(auth);
   const [text, setText] = useState("");
-  const [chatID, setChatID] = useState(null);
   const [messages, setMessages] = useState([]);
   const [otherUser1, setOtherUser1] = useState(null)
   console.log(otherUserID);
@@ -44,11 +43,7 @@ const DirectChat = () => {
       const unsub = onSnapshot(doc(db, "userChats", otherUserID), (doc) => {
         setChats(doc.data());
         const data = Object.keys(doc.data());
-        for (let i in data) {
-          if (data[i] != "date" && data[i] != "lastMessage") {
-            setChatID(data[i]);
-          }
-        }
+        
       });
       return () => {
         unsub();
@@ -57,18 +52,24 @@ const DirectChat = () => {
   }, [user?.uid, otherUserID]);
 
   useEffect(() => {
-    if (chatID) {
-      const unSub = onSnapshot(doc(db, "chats", chatID), (doc) => {
+    if (otherUserID) {
+      const newChatID = user.uid > otherUserID
+      ? user.uid + otherUserID
+      : otherUserID + user.uid
+      const unSub = onSnapshot(doc(db, "chats", newChatID), (doc) => {
         doc.exists() && setMessages(doc.data());
       });
       return () => {
         unSub();
       };
     }
-  }, [chatID, otherUserID]);
+  }, [ otherUserID]);
 
   const handleSubmit = async () => {
-    await updateDoc(doc(db, "chats", chatID), {
+    const newChatID = user.uid > otherUserID
+      ? user.uid + otherUserID
+      : otherUserID + user.uid
+    await updateDoc(doc(db, "chats", newChatID), {
       messages: arrayUnion({
         id: uuid(),
         text,
@@ -79,12 +80,12 @@ const DirectChat = () => {
       }),
     });
     await updateDoc(doc(db, "userChats", user.uid), {
-      [chatID + ".lastMessage"]: { text },
-      [chatID + ".date"]: serverTimestamp(),
+      [newChatID + ".lastMessage"]: { text },
+      [newChatID + ".date"]: serverTimestamp(),
     });
     await updateDoc(doc(db, "userChats", otherUserID), {
-      [chatID + ".lastMessage"]: { text },
-      [chatID + ".date"]: serverTimestamp(),
+      [newChatID + ".lastMessage"]: { text },
+      [newChatID + ".date"]: serverTimestamp(),
     });
     setText("")
   };
