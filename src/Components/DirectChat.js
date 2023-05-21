@@ -73,11 +73,12 @@ const DirectChat = () => {
       <div className="messagesMain">
         {Object.entries(chats)?.map((chat) => {
           return (
-            <div key={chat[0]}>
-              <div>{chat[1]?.userInfo?.displayName}</div>
-              <div>
+            <div key={chat[0]} className="displayMain">
+            <div>
                 <img src={chat[1]?.userInfo?.photoURL} alt="" />
               </div>
+              <div>{chat[1]?.userInfo?.displayName}</div>
+             
             </div>
           );
         })}
