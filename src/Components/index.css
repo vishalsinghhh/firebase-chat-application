@@ -280,3 +280,8 @@
     font-size: 12px;
     max-width: 150px;
 }
+.messageBTNLeave img{
+    width: 25px;
+    margin: 20px;
+    cursor: pointer;
+}

@@ -7,7 +7,6 @@ import {
   onSnapshot,
   serverTimestamp,
   updateDoc,
-  getDoc,
   setDoc,
   query,
   collection,
@@ -22,6 +21,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../utils/firebase";
 import cross from "../Images/cross.svg";
 import direct from "../Images/direct.svg";
+import logout from "../Images/logout.svg"
 
 const RoomChat = () => {
   // const [otherUser, setOtherUser] = useState(null);
@@ -41,7 +41,7 @@ const RoomChat = () => {
   }, [roomID]);
 
   const handleSubmit = async () => {
-    setText("")
+    setText("");
     await updateDoc(doc(db, "userRooms", roomID), {
       messages: arrayUnion({
         id: uuid(),
@@ -56,31 +56,29 @@ const RoomChat = () => {
       ["lastMessage"]: { text },
       ["date"]: serverTimestamp(),
     });
-    
   };
 
   const handleSelect = async (userID) => {
     // Check whether the chat exists or not
 
     const q = query(collection(db, "users"), where("uid", "==", userID));
-    let otherUser = null
+    let otherUser = null;
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        otherUser = doc.data()
+        otherUser = doc.data();
         console.log(doc.data());
       });
     } catch (error) {
       console.log(error);
     }
-    
-    
+
     const combinedId =
       user.uid > otherUser.uid
         ? user.uid + otherUser.uid
         : otherUser.uid + user.uid;
     try {
-      const res = await getDoc(doc(db, "chats", combinedId));
+      const res = await getDocs(doc(db, "chats", combinedId));
       if (!res.exists()) {
         //create a chat in chats collection
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
@@ -109,6 +107,28 @@ const RoomChat = () => {
     }
 
     // create user chats
+  };
+
+  const handleLeave = async () => {
+    let data1 = null
+    let newUsers = []
+    if (roomID) {
+      data1 = messages.users
+      for (let i in data1){
+        if(data1[i].id!==user.uid){
+          newUsers.push(data1[i])
+        }
+      }
+      await updateDoc(doc(db, "userRooms", roomID), {
+        users:newUsers
+      });
+      changeScreenType('empty')
+      
+      console.log(newUsers);
+    }
+    // await updateDoc(cityRef, {
+    //   users: FieldValue.arrayRemove("ce12a1f4-28e3-4623-b4c2-43dda1c21c99"),
+    // });
   };
 
   return (
@@ -144,7 +164,7 @@ const RoomChat = () => {
                       onClick={() => {
                         changeScreenType("direct");
                         handleSelect(item.id);
-                        getOtherUserID(item.id)
+                        getOtherUserID(item.id);
                       }}
                     >
                       <img src={direct} alt="" />
@@ -173,6 +193,14 @@ const RoomChat = () => {
           }}
         >
           All Members
+        </div>
+        <div
+          className="messageBTNLeave"
+          onClick={() => {
+            handleLeave();
+          }}
+        >
+          <img src={logout} alt="" />
         </div>
       </div>
       <div className="messageMap">
