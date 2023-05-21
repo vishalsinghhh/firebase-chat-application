@@ -285,3 +285,36 @@
     margin: 20px;
     cursor: pointer;
 }
+.logoutNav{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'light';
+    font-size: 42px;
+    margin: 20px;
+}
+.loginMain{
+    display: flex;
+    justify-content: center;
+    margin-top: -400px;
+}
+.loginMain button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2C3240;
+    color: #fff;
+    border: none;
+    width: 300px;
+    height: 60px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.FcGoogle{
+    margin: 10px;
+}
+.loginMain button:hover{
+    background: #353b4a;
+}

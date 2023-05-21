@@ -32,14 +32,13 @@ const Login = () => {
 
   return (
     <div>
-      Login
-      <div>
+      <div className="loginMain">
         <button
           onClick={() => {
             googleLogin();
           }}
         >
-          <FcGoogle />
+          <FcGoogle className="FcGoogle" size={40}/>
           Sign in with Google
         </button>
       </div>
