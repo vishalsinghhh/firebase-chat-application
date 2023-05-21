@@ -15,12 +15,15 @@ import {
   updateDoc,
   arrayUnion,
   getDocs,
+  getDoc,
+  setDoc,
+  serverTimestamp
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { useGlobalContext } from "../appContext";
 
 const Sidebar = () => {
-  const { getRoomID, changeScreenType } = useGlobalContext();
+  const { getRoomID, changeScreenType, getOtherUserID } = useGlobalContext();
   const [room, getRooms] = useState();
   const [chats, setChats] = useState([]);
   const [user, loading] = useAuthState(auth);
@@ -87,7 +90,7 @@ const Sidebar = () => {
       };
     }
   }, [user]);
-  console.log(chats);
+  console.log(Object.entries(chats));
 
   useEffect(() => {
     getData();
@@ -96,6 +99,58 @@ const Sidebar = () => {
   // ROOM
   const handleRoom = (data) => {
     getRoomID(data);
+  };
+
+  const handleSelect = async (userID) => {
+    // Check whether the chat exists or not
+
+    const q = query(collection(db, "users"), where("uid", "==", userID));
+    let otherUser = null
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        otherUser = doc.data()
+        console.log(doc.data());
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    
+    
+    const combinedId =
+      user.uid > otherUser.uid
+        ? user.uid + otherUser.uid
+        : otherUser.uid + user.uid;
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+      if (!res.exists()) {
+        //create a chat in chats collection
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+        //create user chats
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: otherUser.uid,
+            displayName: otherUser.displayName,
+            photoURL: otherUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", otherUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    // create user chats
   };
 
   return (
@@ -206,6 +261,21 @@ const Sidebar = () => {
                     </div>
                   </div>
                 );
+              })}
+            </div>
+            <div className="chatsMain">
+            <div>Direct Messages</div>
+              {Object.entries(chats).map((item)=>{
+                return(
+                  <div onClick={() => {
+                        changeScreenType("direct");
+                        handleSelect(item[1]?.userInfo.uid);
+                        getOtherUserID(item[1]?.userInfo.uid)
+                      }}>
+                  <div><img src={item[1]?.userInfo.photoURL} alt="" /></div>
+                  {item[1]?.userInfo.displayName}
+                  </div>
+                )
               })}
             </div>
           </div>

@@ -54,7 +54,7 @@ const DirectChat = () => {
         unsub();
       };
     }
-  }, [user?.uid]);
+  }, [user?.uid, otherUserID]);
 
   useEffect(() => {
     if (chatID) {
@@ -65,7 +65,7 @@ const DirectChat = () => {
         unSub();
       };
     }
-  }, [chatID]);
+  }, [chatID, otherUserID]);
 
   const handleSubmit = async () => {
     await updateDoc(doc(db, "chats", chatID), {
