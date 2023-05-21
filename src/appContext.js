@@ -8,6 +8,7 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [roomID, setRoomID] = useState()
   const [screenType, setScreenType] = useState('empty')
+  const [otherUserID, setOtherUserID] = useState(null)
 
   const getRoomID = async (currentUser)=>{
     setRoomID(currentUser)
@@ -17,10 +18,13 @@ const AppProvider = ({ children }) => {
     setScreenType(currentUser);
     console.log(currentUser);
   }
+  const getOtherUserID = async(currentUser)=>{
+    setOtherUserID(currentUser)
+  }
     
     return (
       <AppContext.Provider
-        value={{getRoomID,changeScreenType, roomID, screenType}}
+        value={{getRoomID,changeScreenType,otherUserID,  roomID, screenType, getOtherUserID}}
       >
         {children}
       </AppContext.Provider>

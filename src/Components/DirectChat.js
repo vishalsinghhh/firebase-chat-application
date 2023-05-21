@@ -6,13 +6,16 @@ import { auth } from "../utils/firebase";
 import send from "../Images/send.svg";
 import Messages from "./Messages";
 import { v4 as uuid } from "uuid";
+import { useGlobalContext } from "../appContext";
 
 const DirectChat = () => {
+  const {otherUserID} = useGlobalContext()
   const [chats, setChats] = useState([]);
   const [user, loading] = useAuthState(auth);
   const [text, setText] = useState("");
   const [chatID, setChatID] = useState(null);
   const [messages, setMessages] = useState([]);
+  console.log(otherUserID);
 
   useEffect(() => {
     if (user) {
@@ -56,8 +59,12 @@ const DirectChat = () => {
       }),
     });
     await updateDoc(doc(db, "userChats", user.uid), {
-      ["lastMessage"]: { text },
-      ["date"]: serverTimestamp(),
+      [chatID+".lastMessage"]: { text },
+      [chatID+".date"]: serverTimestamp(),
+    });
+    await updateDoc(doc(db, "userChats", otherUserID), {
+      [chatID+".lastMessage"]: { text },
+      [chatID+".date"]: serverTimestamp(),
     });
   };
 

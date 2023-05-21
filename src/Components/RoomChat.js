@@ -29,7 +29,7 @@ const RoomChat = () => {
   const [user, loading] = useAuthState(auth);
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
-  const { roomID, changeScreenType } = useGlobalContext();
+  const { roomID, changeScreenType, getOtherUserID } = useGlobalContext();
   useEffect(() => {
     if (roomID) {
       const unsub = onSnapshot(doc(db, "userRooms", roomID), (doc) => {
@@ -142,6 +142,7 @@ const RoomChat = () => {
                       onClick={() => {
                         changeScreenType("direct");
                         handleSelect(item.id);
+                        getOtherUserID(item.id)
                       }}
                     >
                       <img src={direct} alt="" />

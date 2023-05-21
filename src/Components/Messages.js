@@ -7,7 +7,7 @@ const Messages = ({ messages }) => {
   return (
     <div>
       <div>
-        {messages.senderId === user.uid ? (
+        {messages.senderId === user?.uid ? (
           <div className="myMessage1">
             <p>
               <span className="myMessageNew myMessageNew1">{messages.text}</span>
