@@ -19,7 +19,7 @@ const DirectChat = () => {
 
   useEffect(() => {
     if (user) {
-      const unsub = onSnapshot(doc(db, "userChats", user.uid), (doc) => {
+      const unsub = onSnapshot(doc(db, "userChats", otherUserID), (doc) => {
         setChats(doc.data());
         const data = Object.keys(doc.data())
         for(let i in data){
@@ -67,6 +67,7 @@ const DirectChat = () => {
       [chatID+".date"]: serverTimestamp(),
     });
   };
+  console.log("hello",chats);
 
   return (
     <div>

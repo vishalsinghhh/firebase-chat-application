@@ -67,14 +67,13 @@ const Sidebar = () => {
           photoURL: user.photoURL,
         })
       );
-      
-      onSnapshot(q, async(querySnapshot) => {
+
+      onSnapshot(q, async (querySnapshot) => {
         // getRooms(querySnapshot._snapshot.docChanges);
         const employees = await getDocs(q);
-        getRooms(employees._snapshot.docChanges)
+        getRooms(employees._snapshot.docChanges);
       });
       const employees = await getDocs(q);
-      
     }
   };
 
@@ -88,6 +87,7 @@ const Sidebar = () => {
       };
     }
   }, [user]);
+  console.log(chats);
 
   useEffect(() => {
     getData();
@@ -95,7 +95,7 @@ const Sidebar = () => {
 
   // ROOM
   const handleRoom = (data) => {
-    getRoomID(data)
+    getRoomID(data);
   };
 
   return (
@@ -188,17 +188,22 @@ const Sidebar = () => {
                 return (
                   <div
                     onClick={() => {
-                      changeScreenType('room')
-                      {room[index].doc.key.path.segments[6] ? handleRoom(room[index].doc.key.path.segments[6]): handleRoom(room[index].doc.key.path.segments[1]);}
-                      
+                      changeScreenType("room");
+                      {
+                        room[index].doc.key.path.segments[6]
+                          ? handleRoom(room[index].doc.key.path.segments[6])
+                          : handleRoom(room[index].doc.key.path.segments[1]);
+                      }
                     }}
                     className="Rooms"
                   >
-                  <div className="roomIndex">{index+1}</div>
-                  <div className="MainName">{
-                      room[index].doc.data.value.mapValue.fields.roomName
-                        .stringValue
-                    }</div>
+                    <div className="roomIndex">{index + 1}</div>
+                    <div className="MainName">
+                      {
+                        room[index].doc.data.value.mapValue.fields.roomName
+                          .stringValue
+                      }
+                    </div>
                   </div>
                 );
               })}
