@@ -86,6 +86,7 @@ const DirectChat = () => {
       [chatID + ".lastMessage"]: { text },
       [chatID + ".date"]: serverTimestamp(),
     });
+    setText("")
   };
   console.log(otherUser1);
 
@@ -115,6 +116,7 @@ const DirectChat = () => {
           onChange={(e) => {
             setText(e.target.value);
           }}
+          value={text}
         />
         <div
           onClick={() => {

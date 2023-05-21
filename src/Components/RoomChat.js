@@ -41,6 +41,7 @@ const RoomChat = () => {
   }, [roomID]);
 
   const handleSubmit = async () => {
+    setText("")
     await updateDoc(doc(db, "userRooms", roomID), {
       messages: arrayUnion({
         id: uuid(),
@@ -55,6 +56,7 @@ const RoomChat = () => {
       ["lastMessage"]: { text },
       ["date"]: serverTimestamp(),
     });
+    
   };
 
   const handleSelect = async (userID) => {
@@ -185,6 +187,7 @@ const RoomChat = () => {
           onChange={(e) => {
             setText(e.target.value);
           }}
+          value={text}
         />
         <div onClick={() => handleSubmit()}>
           <img src={send} alt="" />

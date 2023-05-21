@@ -83,7 +83,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 520px;
+    max-height: 220px;
 }
 .roomIndex{
     background: #000;
@@ -241,4 +241,42 @@
     width: 50px;
     border-radius: 100%;
     margin-right: 20px;
+}
+
+.chatsMain1{
+    font-family: 'light';
+    font-size: 20px;
+    margin-left: 30px;
+}
+.chatsMain{
+    overflow-y: auto;
+    max-height: 250px;
+    margin-top: 20px;
+}
+.userInfoPhotoURL{
+    
+    background: #363D4F;
+    width: 80%;
+    margin: 20px;
+    height: 70px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 40px;
+}
+.userInfoPhotoURL img{
+    width: 50px;
+    border-radius: 100%;
+    margin: 20px;
+}
+.userInfoPhotoURL:hover{
+    background: #545967;
+}
+.nameMain{
+    font-weight: 700;
+}
+.userInfoPhotoURL p{
+    font-size: 12px;
+    max-width: 150px;
 }

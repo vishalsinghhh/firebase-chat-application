@@ -17,7 +17,7 @@ import {
   getDocs,
   getDoc,
   setDoc,
-  serverTimestamp
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { useGlobalContext } from "../appContext";
@@ -90,7 +90,6 @@ const Sidebar = () => {
       };
     }
   }, [user]);
-  console.log(Object.entries(chats));
 
   useEffect(() => {
     getData();
@@ -105,18 +104,17 @@ const Sidebar = () => {
     // Check whether the chat exists or not
 
     const q = query(collection(db, "users"), where("uid", "==", userID));
-    let otherUser = null
+    let otherUser = null;
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        otherUser = doc.data()
+        otherUser = doc.data();
         console.log(doc.data());
       });
     } catch (error) {
       console.log(error);
     }
-    
-    
+
     const combinedId =
       user.uid > otherUser.uid
         ? user.uid + otherUser.uid
@@ -264,18 +262,26 @@ const Sidebar = () => {
               })}
             </div>
             <div className="chatsMain">
-            <div>Direct Messages</div>
-              {Object.entries(chats).map((item)=>{
-                return(
-                  <div onClick={() => {
-                        changeScreenType("direct");
-                        handleSelect(item[1]?.userInfo.uid);
-                        getOtherUserID(item[1]?.userInfo.uid)
-                      }}>
-                  <div><img src={item[1]?.userInfo.photoURL} alt="" /></div>
-                  {item[1]?.userInfo.displayName}
+              
+              <div>{Object.entries(chats).length!==0 && <div className="chatsMain1">Direct Messages</div>}</div>
+              {Object.entries(chats).map((item) => {
+                return (
+                  <div
+                    onClick={() => {
+                      changeScreenType("direct");
+                      handleSelect(item[1]?.userInfo.uid);
+                      getOtherUserID(item[1]?.userInfo.uid);
+                    }}
+                    className="userInfoPhotoURL"
+                  >
+                    <div>
+                      <img src={item[1]?.userInfo.photoURL} alt="" />
+                    </div>
+                    <div className="userMainMsg"><div className="nameMain">{item[1]?.userInfo.displayName}</div>
+                    <p>{item[1]?.lastMessage?.text}</p></div>
+                    
                   </div>
-                )
+                );
               })}
             </div>
           </div>
