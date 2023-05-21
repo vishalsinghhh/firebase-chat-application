@@ -264,7 +264,7 @@ const Sidebar = () => {
             <div className="chatsMain">
               
               <div>{Object.entries(chats).length!==0 && <div className="chatsMain1">Direct Messages</div>}</div>
-              {Object.entries(chats).map((item) => {
+              {Object.entries(chats).sort((a, b)=>b[1].date-a[1].date).map((item) => {
                 return (
                   <div
                     onClick={() => {
@@ -275,9 +275,9 @@ const Sidebar = () => {
                     className="userInfoPhotoURL"
                   >
                     <div>
-                      <img src={item[1]?.userInfo.photoURL} alt="" />
+                      <img src={item[1]?.userInfo?.photoURL} alt="" />
                     </div>
-                    <div className="userMainMsg"><div className="nameMain">{item[1]?.userInfo.displayName}</div>
+                    <div className="userMainMsg"><div className="nameMain">{item[1]?.userInfo?.displayName}</div>
                     <p>{item[1]?.lastMessage?.text}</p></div>
                     
                   </div>

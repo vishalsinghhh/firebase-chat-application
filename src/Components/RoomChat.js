@@ -7,6 +7,7 @@ import {
   onSnapshot,
   serverTimestamp,
   updateDoc,
+  getDoc,
   setDoc,
   query,
   collection,
@@ -41,7 +42,7 @@ const RoomChat = () => {
   }, [roomID]);
 
   const handleSubmit = async () => {
-    setText("");
+    setText("")
     await updateDoc(doc(db, "userRooms", roomID), {
       messages: arrayUnion({
         id: uuid(),
@@ -56,29 +57,31 @@ const RoomChat = () => {
       ["lastMessage"]: { text },
       ["date"]: serverTimestamp(),
     });
+    
   };
 
   const handleSelect = async (userID) => {
     // Check whether the chat exists or not
 
     const q = query(collection(db, "users"), where("uid", "==", userID));
-    let otherUser = null;
+    let otherUser = null
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        otherUser = doc.data();
+        otherUser = doc.data()
         console.log(doc.data());
       });
     } catch (error) {
       console.log(error);
     }
-
+    
+    
     const combinedId =
       user.uid > otherUser.uid
         ? user.uid + otherUser.uid
         : otherUser.uid + user.uid;
     try {
-      const res = await getDocs(doc(db, "chats", combinedId));
+      const res = await getDoc(doc(db, "chats", combinedId));
       if (!res.exists()) {
         //create a chat in chats collection
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
@@ -123,8 +126,6 @@ const RoomChat = () => {
         users:newUsers
       });
       changeScreenType('empty')
-      
-      console.log(newUsers);
     }
     // await updateDoc(cityRef, {
     //   users: FieldValue.arrayRemove("ce12a1f4-28e3-4623-b4c2-43dda1c21c99"),
@@ -164,7 +165,7 @@ const RoomChat = () => {
                       onClick={() => {
                         changeScreenType("direct");
                         handleSelect(item.id);
-                        getOtherUserID(item.id);
+                        getOtherUserID(item.id)
                       }}
                     >
                       <img src={direct} alt="" />
