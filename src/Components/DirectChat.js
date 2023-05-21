@@ -18,7 +18,16 @@ const DirectChat = () => {
     if (user) {
       const unsub = onSnapshot(doc(db, "userChats", user.uid), (doc) => {
         setChats(doc.data());
-        setChatID(Object.entries(doc.data())[0][0]);
+        
+        
+        if (Object.entries(doc.data())[0][0] === 'date' && Object.entries(doc.data())[1][0] === 'lastMessage'){
+          setChatID(Object.entries(doc.data())[2][0]);
+        }else if(Object.entries(doc.data())[0][0] === 'date' && Object.entries(doc.data())[2][0] === 'lastMessage'){
+          setChatID(Object.entries(doc.data())[1][0]);
+        }else{
+          setChatID(Object.entries(doc.data())[0][0]);
+        }
+        console.log(chatID);
       });
       return () => {
         unsub();
@@ -36,7 +45,7 @@ const DirectChat = () => {
       };
     }
   }, [chatID]);
-  console.log(messages);
+  console.log(chatID);
   
 
   const handleSubmit = async () => {
@@ -62,9 +71,9 @@ const DirectChat = () => {
         {Object.entries(chats)?.map((chat) => {
           return (
             <div key={chat[0]}>
-              <div>{chat[1].userInfo.displayName}</div>
+              <div>{chat[1]?.userInfo?.displayName}</div>
               <div>
-                <img src={chat[1].userInfo.photoURL} alt="" />
+                <img src={chat[1]?.userInfo?.photoURL} alt="" />
               </div>
             </div>
           );
